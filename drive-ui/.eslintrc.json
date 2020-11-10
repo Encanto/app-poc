@@ -1,0 +1,25 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "browser": true
+  },
+  "globals": {
+    "chrome": false,
+    "klayNoflo": false,
+    "CodeMirror": false,
+    "ReactDOM": false,
+    "TheGraph": false,
+    "ga": false
+  },
+  "rules": {
+    "no-underscore-dangle": 0,
+    "class-methods-use-this": 0,
+    "camelcase": 1,
+    "react/no-render-return-value": 1
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  }
+}

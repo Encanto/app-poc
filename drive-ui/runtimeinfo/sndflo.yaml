@@ -1,0 +1,22 @@
+runtimetypes:
+  sndflo:
+    shortname: 'SndFlo Sound Synthesis'
+    icon: music
+    description: 'Create sound using SuperCollider'
+    helpurl: 'https://github.com/jonnor/sndflo#readme'
+
+componenttemplates:
+  supercollider: |
+    SynthDef("MyFilter", {
+        arg in=SndFloLibrary.silentIn, out=SndFloLibrary.silentOut, freq=4400;
+        Out.ar(out, BLowPass.ar(In.ar(in), freq))
+    },
+        metadata: (
+            description: "my filter",
+            specs: (
+                freq: ControlSpec(20, 20000, \exp, 0.1, 2200, "Hz")
+            )
+        )
+    )
+
+examples: {}

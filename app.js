@@ -1,4 +1,8 @@
 const {app, BrowserWindow} = require('electron') // http://electron.atom.io/docs/api
+const path = require('path');
+const url = require('url');
+var fs = require('fs');
+
 
 let window = null
 
@@ -20,8 +24,11 @@ app.once('ready', () => {
   })
 
   // URL is argument to npm start
-  const url = 'http://52.52.146.246/'
-  window.loadURL(url)
+  window.loadURL(url.format({
+    pathname: path.join(__dirname, 'drive-ui', 'index.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
 
   // Show window when page is ready
   window.once('ready-to-show', () => {

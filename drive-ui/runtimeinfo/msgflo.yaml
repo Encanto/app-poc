@@ -1,0 +1,104 @@
+runtimetypes:
+  msgflo:
+    shortname: MsgFlo Message Queuing
+    icon: cubes
+    description: 'Message queue orchestration'
+    helpurl: 'https://msgflo.org/docs/usage/'
+preferredlanguage: python
+componenttemplates:
+  python: |
+    #!/usr/bin/env python
+    import msgflo
+
+    class <%= name %>(msgflo.Participant):
+      def __init__(self, role):
+        d = {
+          'component': '<%= namespace %>/<%= name %>',
+          'label': '<%= description %>',
+          'icon': '<%= icon %>',
+          'inports': [
+            { 'id': 'in', 'type': 'any' },
+          ],
+          'outports': [
+            { 'id': 'out', 'type': 'any' },
+          ],
+        }
+        msgflo.Participant.__init__(self, d, role)
+
+      def process(self, inport, msg):
+        self.send('out', msg.data)
+        self.ack(msg)
+
+    if __name__ == '__main__':
+      msgflo.main(<%= name %>)
+  coffeescript: |
+    # To work in msgflo-nodejs source tree
+    try
+      msgflo = require 'msgflo-nodejs'
+    catch e
+      msgflo = require '..'
+
+    <%= name %> = (client, role) ->
+
+      definition =
+        component: '<%= namespace %>/<%= name %>'
+        icon: '<%= icon %>'
+        label: '<%= description %>'
+        inports: [
+          id: 'in'
+          type: 'any'
+        ]
+        outports: [
+          id: 'out'
+          type: 'any'
+        ]
+      process = (inport, indata, callback) ->
+        return callback 'out', null, indata
+      return new msgflo.participant.Participant client, definition, process, role
+
+    module.exports = <%= name %>
+  javascript: |
+    try {
+      var msgflo = require('msgflo-nodejs');
+    } catch (error) {
+      var e = error;
+      var msgflo = require('..');
+    }
+
+    var <%= name %> = function(client, role) {
+      var definition = {
+        component: '<%= namespace %>/<%= name %>',
+        icon: '<%= icon %>',
+        label: '<%= description %>',
+        inports: [
+          {
+            id: 'in',
+            type: 'any'
+          }
+        ],
+        outports: [
+          {
+            id: 'out',
+            type: 'any'
+          }
+        ]
+      };
+      var process = function(inport, indata, callback) {
+        return callback('out', null, indata);
+      };
+      return new msgflo.participant.Participant(client, definition, process, role);
+    };
+
+    module.exports = <%= name %>;
+  yaml: |
+    # Declare MsgFlo participant on behalf of code which does not send discovery message by itself
+    component: '<%= namespace %>/<%= name %>'
+    label: '<%= description %>'
+    icon: '<%= icon %>'
+    inports:
+      open:
+        queue: /bitraf/door/#ROLE/open
+        type: object
+    outports: {}
+
+examples: {}

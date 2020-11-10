@@ -1,0 +1,39 @@
+# @runtime noflo-browser
+# @icon search
+
+INPORT=Dispatch.IN:IN
+OUTPORT=MergeContext.OUT:CONTEXT
+
+'context:edges,context:nodes,context:search_library,context:search_graph,context:search_library_result,context:graph' -> ROUTES Dispatch(ui/DispatchAction)
+
+# Selected edges
+Dispatch HANDLE[0] -> IN CleanEdges(ui/CleanAction) OUT -> START CreateEdgeCtx(objects/CreateObject)
+CreateEdgeCtx OUT -> CONTEXT SetEdges(ui/SetToContext)
+'edges' -> KEY SetEdges
+CleanEdges OUT -> VALUE SetEdges CONTEXT -> IN MergeContext(core/Merge)
+
+# Selected nodes
+Dispatch HANDLE[1] -> IN CleanNodes(ui/CleanAction) OUT -> START CreateNodeCtx(objects/CreateObject)
+CreateNodeCtx OUT -> CONTEXT SetNodes(ui/SetToContext)
+'nodes' -> KEY SetNodes
+CleanNodes OUT -> VALUE SetNodes CONTEXT -> IN MergeContext
+
+# Search passes through directly for now
+Dispatch HANDLE[2] -> IN CleanSearch(ui/CleanAction) OUT -> IN MergeContext
+
+# Search results pass through directly for now
+Dispatch HANDLE[4] -> IN CleanSearchResults(ui/CleanAction) OUT -> IN MergeContext
+
+# Search nodes in the graph
+Dispatch HANDLE[5] -> IN CleanGraph(ui/CleanAction) OUT -> IN GetGraph(objects/GetObjectKey)
+'graph' -> STRING SendGraphKey(strings/SendString) OUT -> KEY GetGraph
+CleanGraph OUT -> IN SendGraphKey
+GetGraph OUT -> GRAPH FindNodesInGraph(ui/FindNodesInGraph)
+
+Dispatch HANDLE[3] -> IN CleanSearchterm(ui/CleanAction) OUT -> IN GetSearchTerm(objects/GetObjectKey)
+'search' -> STRING SendSearchKey(strings/SendString) OUT -> KEY GetSearchTerm
+CleanSearchterm OUT -> IN SendSearchKey
+
+GetSearchTerm OUT -> SEARCH FindNodesInGraph
+FindNodesInGraph NODES -> NODES NodesToContext(ui/SearchGraphNodeToContext)
+NodesToContext CONTEXT -> IN MergeContext

@@ -1,0 +1,17 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: daily
+    ignore:
+      - dependency-name: "@polymer/polymer"
+      - dependency-name: "@webcomponents/webcomponentsjs"
+      - dependency-name: "polymer-bundler"
+      - dependency-name: "noflo"
+      - dependency-name: "noflo-runtime-base"
+      - dependency-name: "noflo-runtime-postmessage"
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly

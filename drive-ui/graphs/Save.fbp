@@ -1,0 +1,19 @@
+INPORT=Write.DB:DB
+INPORT=Store.IN:STORE
+INPORT=EnsureId.IN:ITEM
+OUTPORT=Put.VALUE:ITEM
+OUTPORT=Errors.OUT:ERROR
+
+'readwrite' -> STRING HoldMode(strings/SendString)
+Store(core/Repeat) OUT -> IN HoldMode
+HoldMode OUT -> MODE Write(indexeddb/BeginTransaction)
+Store OUT -> STORES Write
+Store OUT -> NAME GetStore(indexeddb/GetStore)
+Write TRANSACTION -> TRANSACTION GetStore
+GetStore STORE -> STORE Put(indexeddb/Put)
+EnsureId(ui/EnsureId) OUT -> VALUE Put
+
+# Error handling
+Write ERROR -> IN Errors(core/Merge)
+GetStore ERROR -> IN Errors
+Put ERROR -> IN Errors

@@ -1,0 +1,17 @@
+# @runtime noflo-browser
+# @icon user-circle
+INPORT=Dispatch.IN:IN
+OUTPORT=MergeContext.OUT:CONTEXT
+
+'user:info,user:error' -> ROUTES Dispatch(ui/DispatchAction)
+
+# Normalize user information
+Dispatch HANDLE[0] -> IN CleanUser(ui/CleanAction)
+'user' -> KEY UserToContext(ui/SetToContext)
+CleanUser OUT -> VALUE UserToContext
+CleanUser OUT -> START CreateCtx(ui/CreateEmptyContext) OUT -> CONTEXT UserToContext
+UserToContext CONTEXT -> IN MergeContext(core/Merge)
+
+# Convert user errors to context errors
+Dispatch HANDLE[1] -> ERROR ErrorToCtx(ui/ErrorToContext)
+ErrorToCtx OUT -> IN MergeContext(core/Merge)

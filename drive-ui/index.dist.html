@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>$NOFLO_APP_TITLE v$NOFLO_APP_VERSION</title>
+    <link href="https://github.com/noflo/noflo-ui" rel="source" />
+    <meta name="description" content="$NOFLO_APP_DESCRIPTION">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#071112">
+    <link rel="manifest" href="$NOFLO_ROOT_DIRmanifest.webapp.json">
+    <link rel="apple-touch-icon" href="$NOFLO_ROOT_DIRapp/$NOFLO_THEME-60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="$NOFLO_ROOT_DIRapp/$NOFLO_THEME-120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="$NOFLO_ROOT_DIRapp/$NOFLO_THEME-144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="$NOFLO_ROOT_DIRapp/$NOFLO_THEME-152.png">
+    <link rel="icon" sizes="192x192" href="$NOFLO_ROOT_DIRapp/$NOFLO_THEME-192.png">
+    <link rel="icon" sizes="128x128" href="$NOFLO_ROOT_DIRapp/$NOFLO_THEME-128.png">
+    <link rel="shortcut icon" href="$NOFLO_ROOT_DIRpilot.ico" />
+    <!-- $NOFLO_APP_ANALYTICS -->
+
+    <script src="browser/vendor/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="browser/vendor/klayjs-noflo/klay-noflo.js"></script>
+    <script src="browser/vendor/hammerjs/hammer.min.js"></script>
+    <script src="browser/vendor/observe-js/observe.js"></script>
+
+    <script src="browser/noflo-ui.min.js"></script>
+
+    <script src="browser/vendor/codemirror/lib/codemirror.js"></script>
+    <script src="browser/vendor/codemirror/mode/xml.js"></script>
+    <script src="browser/vendor/codemirror/mode/javascript.js"></script>
+    <script src="browser/vendor/codemirror/mode/css.js"></script>
+    <script src="browser/vendor/codemirror/mode/vbscript.js"></script>
+    <script src="browser/vendor/codemirror/mode/coffeescript.js"></script>
+    <script src="browser/vendor/codemirror/mode/clike.js"></script>
+    <script src="browser/vendor/codemirror/mode/htmlmixed.js"></script>
+    <script src="browser/vendor/codemirror/mode/smalltalk.js"></script>
+    <script src="browser/vendor/codemirror/mode/yaml.js"></script>
+    <script src="browser/vendor/codemirror/mode/python.js"></script>
+
+    <link rel="stylesheet" href="css/noflo-ui.css">
+
+    <noflo-polymer name="noflo-ui" inports="updated width height" outports="event"></noflo-polymer>
+  </head>
+  <body class="$NOFLO_THEME loading">
+    <div id="loading">$NOFLO_APP_LOADING</div>
+    <noflo-ui id="container"></noflo-ui>
+  </body>
+</html>

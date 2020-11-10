@@ -1,0 +1,12 @@
+runtimetypes:
+  javafbp:
+    shortname: JavaFBP
+    icon: android
+    description: 'Program Java and Android applications'
+    helpurl: 'https://github.com/jonnor/javafbp-runtime#readme'
+
+componenttemplates:
+  'java': |
+    // TODO
+
+examples: {}

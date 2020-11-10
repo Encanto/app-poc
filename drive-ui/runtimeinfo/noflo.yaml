@@ -1,0 +1,159 @@
+runtimetypes:
+  'noflo-browser':
+    shortname: NoFlo for Browser
+    icon: html5
+    description: 'Build client-side browser applications'
+    helpurl: 'https://github.com/noflo/noflo-browser-app#readme'
+  'noflo-nodejs':
+    shortname: NoFlo for Node.js
+    icon: cloud
+    description: 'Build network applications'
+    helpurl: 'https://github.com/noflo/noflo-nodejs#readme'
+  'noflo-gnome':
+    shortname: NoFlo for GNOME
+    icon: desktop
+    description: 'Build GNOME desktop applications'
+    helpurl: 'https://github.com/noflo/noflo-gnome#readme'
+preferredlanguage: es2015
+componenttemplates:
+  javascript: |
+    var noflo = require('noflo');
+
+    exports.getComponent = function() {
+      var c = new noflo.Component();
+      c.description = '<%= description %>';
+      c.icon = '<%= icon %>';
+      c.inPorts.add('in', {
+        datatype: 'all',
+        description: 'Packet to forward'
+      });
+      c.outPorts.add('out', {
+        datatype: 'all'
+      });
+      c.process(function (input, output) {
+        // Check preconditions on input data
+        if (!input.hasData('in')) {
+          return;
+        }
+        // Read packets we need to process
+        var data = input.getData('in');
+        // Process data and send output
+        output.send({
+          out: data
+        });
+        // Deactivate
+        output.done();
+      });
+      return c;
+    };
+  coffeescript: |
+    noflo = require 'noflo'
+
+    exports.getComponent = ->
+      c = new noflo.Component
+      c.description = '<%= description %>'
+      c.icon = '<%= icon %>'
+      c.inPorts.add 'in',
+        datatype: 'all'
+        description: 'Packet to forward'
+      c.outPorts.add 'out',
+        datatype: 'all'
+      c.process (input, output) ->
+        # Check preconditions on input data
+        return unless input.hasData 'in'
+        # Read packets we need to process
+        data = input.getData 'in'
+        # Process data and send output
+        output.send
+          out: data
+        # Deactivate
+        output.done()
+
+  es2015: |
+    const noflo = require('noflo');
+
+    exports.getComponent = () => {
+      const c = new noflo.Component();
+      c.description = '<%= description %>';
+      c.icon = '<%= icon %>';
+      c.inPorts.add('in', {
+        datatype: 'all',
+        description: 'Packet to forward',
+      });
+      c.outPorts.add('out', {
+        datatype: 'all',
+      });
+      c.process((input, output) => {
+        // Check preconditions on input data
+        if (!input.hasData('in')) {
+          return;
+        }
+        // Read packets we need to process
+        const data = input.getData('in');
+        // Process data and send output
+        output.send({
+          out: data,
+        });
+        // Deactivate
+        output.done();
+      });
+      return c;
+    };
+  typescript: |
+    import { Component } from 'noflo';
+
+    exports.getComponent = (): Component => {
+      const c = new Component();
+      c.description = '<%= description %>';
+      c.icon = '<%= icon %>';
+      c.inPorts.add('in', {
+        datatype: 'all',
+        description: 'Packet to forward'
+      });
+      c.outPorts.add('out', {
+        datatype: 'all'
+      });
+      c.process((input, output): void => {
+        // Check preconditions on input data
+        if (!input.hasData('in')) {
+          return;
+        }
+        // Read packets we need to process
+        const data = input.getData('in');
+        // Process data and send output
+        output.send({
+          out: data
+        });
+        // Deactivate
+        output.done();
+      });
+      return c;
+    };
+
+examples:
+  clock:
+    label: 'Animated clock'
+    id: '86a28c01d66cd8bf672f4e0a3e1ba851'
+  camtopalette:
+    label: 'Cam to palette'
+    id: 'efd306b5846c236998a63c535ceebed1'
+    ssl: true
+  canvas:
+    label: 'Canvas pattern'
+    id: 'dc0414ecf989b4b130b119e948653350'
+  counter:
+    label: 'Click counter'
+    id: '38471e33458d644e907f4637434f5bbf'
+  draganddrop:
+    label: 'Drag-and-drop physics'
+    id: '026a7bc8f1b482f56ad336c9d72dd72f'
+  delaunaymasks:
+    label: 'Delaunay masks'
+    id: 'd6c1fa7b4b9d437564e954f338d970b9'
+    ssl: true
+  reacttodo:
+    label: 'React TODO list'
+    id: 'c111454c9fd2f74d37d1e8a4e739adfd'
+  webaudio:
+    label: 'Web Audio'
+    id: '6724a6eb8a1aaf351866e7a43c3ecd43'
